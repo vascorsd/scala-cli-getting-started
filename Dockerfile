@@ -9,3 +9,8 @@ RUN useradd builduser -m && passwd -d builduser && printf 'builduser ALL=(ALL) A
 RUN sudo -u builduser bash -c 'cd /tmp && git clone https://github.com/vascorsd/archlinux-packages.git && cd archlinux-packages/scala-cli/native-bin/ && makepkg --syncdeps --install --noconfirm --noprogressbar'
 
 
+WORKDIR /code
+COPY countByExtension.sc /code
+COPY files.scala /code
+
+CMD ["scala-cli", "package", ".", "-o", "countByExtension", "-v", "-v", "-v"]
